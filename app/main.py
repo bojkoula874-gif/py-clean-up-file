@@ -1,4 +1,6 @@
 import os
+from warnings import catch_warnings
+
 os.remove("file.txt")
 
 
@@ -10,4 +12,7 @@ class CleanUpFile:
         return self
 
     def __exit__(self) -> None:
-        os.remove(f"{self.path}")
+        try:
+            os.remove(self.path)
+        except FileNotFoundError:
+            return
